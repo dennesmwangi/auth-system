@@ -1,0 +1,50 @@
+AUTH SYTEM API
+API KEY ENDPOINTS
+Base routes:
+    POST /api/auth/*
+    GET /api/auth/*
+
+1. Register
+-POST /api/auth/register
+-Operation: create a new user
+-Request body: { firstName, lastName, emailAddress, password }
+-Response: success message, email verification token
+-Notes: hash password, validate input, reject duplicate email
+
+2. Login
+-POST /api/auth/login
+-Operation: authenticate user 
+-Request body: { email, password }
+-Response: JWT access token and refresh token
+-Notes: verify password, issue tokens, set secure cookie
+
+3. Logout
+-POST /api/auth/logout 
+-Operation: clear session / revoke refresh token
+-Request body: optional { refreshToken }
+
+4. Get current user 
+-Get /api/auth/user 
+-Operation: return authenticated user info
+-Auth: requires valid access token
+-Response: { id, email, name, role, createdAt }
+
+5. Refresh token 
+-POST /api/auth/refresh
+-Operation: renew access token
+-Request body: { refreshToken } or cookie
+-Response: new access token
+
+6. Password reset 
+-POST /api/auth/password/forgot
+    -Operation: send reset email
+    -Request body: { email }
+-POST /api/auth/password/reset
+    -Operation: update password with reset token
+    -Request body: { token, password }
+
+7. Email / account verification
+-POST /api/auth/verify/
+-Operation: activate account from verification token
+-Request body: { token }
+-Response: success/failure

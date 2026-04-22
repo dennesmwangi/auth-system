@@ -1,11 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
-
 import express from "express";
 import cors from "cors";
 import os from "os";
-
-//import authRoutes from "./routes/authRoutes.js";
+import db from "./src/config/db.js";
+import authRoutes from "./src/routes/auth.routes.js";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 5000;
@@ -16,7 +15,8 @@ app.disable("x-powered-by");
 
 app.use(
   cors({
-    origin: CLIENT_ORIGIN,
+    //origin: CLIENT_ORIGIN,
+    origin: ["http://localhost:5173", "http://192.168.5.100:5173"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -43,7 +43,7 @@ app.get("/health", (req, res) => {
   });
 });
 
-//app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
