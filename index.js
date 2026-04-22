@@ -16,7 +16,7 @@ app.disable("x-powered-by");
 app.use(
   cors({
     //origin: CLIENT_ORIGIN,
-    origin: ["http://localhost:5173", "http://192.168.5.100:5173"],
+    origin: ["http://localhost:3000", "http://192.168.5.100:3000"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
