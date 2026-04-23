@@ -53,3 +53,26 @@ export function validateRegisterInput(body) {
 
   return { data };
 }
+
+export function validateLoginInput(body) {
+  const data = {
+    emailAddress: body.emailAddress.trim(),
+    password: body.password.trim(),
+  };
+  //const emailAddress = body.emailAddress.trim();
+  //const password = body.password.trim();
+
+  if (!data.emailAddress) {
+    return {
+      error: { status: 400, message: "Email address is required" },
+    };
+  }
+
+  if (!data.password) {
+    return {
+      error: { status: 400, message: "Password cannot be empty" },
+    };
+  }
+
+  return { data };
+}

@@ -1,8 +1,12 @@
 import { createUser, verifyEmailUser } from "../services/auth.service.js";
-import { validateRegisterInput } from "../validators/auth.validator.js";
+import {
+  validateRegisterInput,
+  validateLoginInput,
+} from "../validators/auth.validator.js";
 import sendSignupEmail from "../services/email.service.js";
 import crypto from "crypto";
 import db from "../config/db.js";
+import { response } from "express";
 
 export const registerUser = async (req, res) => {
   try {
@@ -62,6 +66,28 @@ export const verifyEmail = async (req, res) => {
     } else if (error.code === "EXPIRED_TOKEN") {
       return res.status(404).json({ message: "Token has expired" });
     }
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const loginUser = async (req, res) => {
+  //const { emailAddress, password } = req.body;
+
+  try {
+    const { data, error } = validateLoginInput(req.body);
+
+    if (error) {
+      return res.status(error.status).json({ message: error.message });
+    }
+
+    console.log(data);
+    return res.status(200).json({
+      message: "success",
+    });
+
+    // await loginUser here
+  } catch (error) {
+    console.error("loginUser error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
