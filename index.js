@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import os from "os";
+import cookieParser from "cookie-parser";
 import db from "./src/config/db.js";
 import authRoutes from "./src/routes/auth.routes.js";
 
@@ -12,11 +13,12 @@ const HOST = "0.0.0.0";
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://192.168.5.100:3000";
 
 app.disable("x-powered-by");
+app.use(cookieParser());
 
 app.use(
   cors({
     //origin: CLIENT_ORIGIN,
-    origin: ["http://localhost:3000", "http://192.168.5.100:3000"],
+    origin: ["http://192.168.5.100:3000"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],

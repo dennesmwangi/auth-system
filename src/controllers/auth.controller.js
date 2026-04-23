@@ -1,4 +1,8 @@
-import { createUser, verifyEmailUser } from "../services/auth.service.js";
+import {
+  createUser,
+  verifyEmailUser,
+  logUserIn,
+} from "../services/auth.service.js";
 import {
   validateRegisterInput,
   validateLoginInput,
@@ -80,14 +84,32 @@ export const loginUser = async (req, res) => {
       return res.status(error.status).json({ message: error.message });
     }
 
-    console.log(data);
+    const loginToken = await logUserIn(data);
+
+    console.log("Setting cookie");
+    let x = res.cookie("loginToken", loginToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 1000,
+    });
+
+    console.log(x);
+
+    console.log("loginToken:", loginToken);
+
     return res.status(200).json({
-      message: "Success",
+      message: "Login successful",
     });
 
     // await loginUser here
   } catch (error) {
     console.error("loginUser error:", error);
+
+    if (error.code === "INVALID_CREDENTIALS") {
+      return res.status(404).json({ message: "Invalid email or password!" });
+    }
+
     return res.status(500).json({ message: "Internal server error" });
   }
 };
