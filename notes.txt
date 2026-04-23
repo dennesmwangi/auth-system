@@ -24,7 +24,7 @@ Base routes:
 -Request body: optional { refreshToken }
 
 4. Get current user 
--Get /api/auth/user 
+-Get /api/dashboard 
 -Operation: return authenticated user info
 -Auth: requires valid access token
 -Response: { id, email, name, role, createdAt }

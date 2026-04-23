@@ -89,7 +89,7 @@ export async function verifyEmailUser(token) {
 
 export async function logUserIn({ emailAddress, password }) {
   const [rows] = await db.execute(
-    "SELECT id, password_hash FROM users WHERE email_address = ?",
+    "SELECT id, email_address, password_hash FROM users WHERE email_address = ?",
     [emailAddress],
   );
 
