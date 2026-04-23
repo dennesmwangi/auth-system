@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import crypto, { sign } from "crypto";
 import db from "../config/db.js";
 import jwt from "jsonwebtoken";
+import sendSignupEmail from "./email.service.js";
 
 const SALT_ROUNDS = 10;
 
@@ -89,7 +90,7 @@ export async function verifyEmailUser(token) {
 
 export async function logUserIn({ emailAddress, password }) {
   const [rows] = await db.execute(
-    "SELECT id, email_address, password_hash FROM users WHERE email_address = ?",
+    "SELECT id, first_name,last_name, email_address, email_address_verified, password_hash, verification_token_expires_at FROM users WHERE email_address = ?",
     [emailAddress],
   );
 
@@ -106,6 +107,50 @@ export async function logUserIn({ emailAddress, password }) {
   if (!comparePassword) {
     const error = new Error("Invalid email or password");
     error.code = "INVALID_CREDENTIALS";
+    throw error;
+  }
+
+  const resendMail = async (email) => {
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const verificationTokenHash = crypto
+      .createHash("sha256")
+      .update(verificationToken)
+      .digest("hex");
+
+    const expiresAt = new Date(Date.now() + 20 * 60 * 1000);
+
+    await db.execute(
+      `UPDATE users 
+   SET verification_token_hash = ?, 
+       verification_token_expires_at = ?
+   WHERE email_address = ?`,
+      [verificationTokenHash, expiresAt, email],
+    );
+    return { verificationToken };
+  };
+
+  if (user.email_address_verified === 0) {
+    if (user.verification_token_expires_at) {
+      const expires = new Date(user.verification_token_expires_at);
+
+      if (expires > new Date()) {
+        const error = new Error(
+          "A verification email was already sent. Check your inbox.",
+        );
+        error.code = "TOKEN_STILL_VALID";
+        throw error;
+      }
+    }
+    let { verificationToken } = await resendMail(user.email_address);
+    let verificationLink = `http://${process.env.CLIENT_ORIGIN}/verify?token=${verificationToken}`;
+    sendSignupEmail(
+      `${user.first_name} ${user.last_name}`,
+      user.email_address,
+      verificationLink,
+    );
+
+    const error = new Error("Email not verified");
+    error.code = "UNVERIFIED_EMAIL";
     throw error;
   }
 

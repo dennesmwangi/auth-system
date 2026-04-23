@@ -16,14 +16,15 @@ export const registerUser = async (req, res) => {
   try {
     console.log(req.body);
     const { data, error } = validateRegisterInput(req.body);
-    let fullName = `${data.firstName} ${data.lastName}`;
 
     if (error) {
       return res.status(error.status).json({ message: error.message });
     }
 
-    let { verificationToken } = await createUser(data);
-    let verificationLink = `http://${process.env.CLIENT_ORIGIN}/verify?token=${verificationToken}`;
+    const fullName = `${data.firstName} ${data.lastName}`;
+
+    const { verificationToken } = await createUser(data);
+    const verificationLink = `http://${process.env.CLIENT_ORIGIN}/verify?token=${verificationToken}`;
     sendSignupEmail(
       `${data.firstName} ${data.lastName}`,
       data.emailAddress,
@@ -103,6 +104,15 @@ export const loginUser = async (req, res) => {
 
     if (error.code === "INVALID_CREDENTIALS") {
       return res.status(404).json({ message: "Invalid email or password!" });
+    } else if (error.code === "UNVERIFIED_EMAIL") {
+      return res.status(404).json({
+        message:
+          "Email not verified. A verification link has been sent. Please check your email.",
+      });
+    } else if ((error.code = "TOKEN_STILL_VALID")) {
+      return res.status(404).json({
+        message: "A verification email was already sent. Check your inbox.",
+      });
     }
 
     return res.status(500).json({ message: "Internal server error" });
