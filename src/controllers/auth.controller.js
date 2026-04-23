@@ -86,17 +86,12 @@ export const loginUser = async (req, res) => {
 
     const loginToken = await logUserIn(data);
 
-    console.log("Setting cookie");
-    let x = res.cookie("loginToken", loginToken, {
+    res.cookie("loginToken", loginToken, {
       httpOnly: true,
       secure: false,
       sameSite: "lax",
       maxAge: 60 * 60 * 1000,
     });
-
-    console.log(x);
-
-    console.log("loginToken:", loginToken);
 
     return res.status(200).json({
       message: "Login successful",
