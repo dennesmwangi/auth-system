@@ -7,7 +7,10 @@ import {
   validateRegisterInput,
   validateLoginInput,
 } from "../validators/auth.validator.js";
-import sendSignupEmail from "../services/email.service.js";
+import {
+  sendSignupEmail,
+  sendResetCodeEmail,
+} from "../services/email.service.js";
 import crypto from "crypto";
 import db from "../config/db.js";
 import { response } from "express";
@@ -115,6 +118,55 @@ export const loginUser = async (req, res) => {
       });
     }
 
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const forgotPassword = async (req, res) => {
+  const { emailAddress } = req.body;
+
+  try {
+    if (!emailAddress) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    const [rows] = await db.execute(
+      `SELECT id, first_name, last_name FROM users WHERE email_address = ?`,
+      [emailAddress],
+    );
+
+    if (rows.length === 0) {
+      return res.status(200).json({
+        message:
+          "If an account with that email exists, a reset code has been sent.",
+      });
+    }
+
+    const user = rows[0];
+
+    const code = crypto.randomInt(100000, 1000000).toString();
+    const codeHash = crypto.createHash("sha256").update(code).digest("hex");
+
+    const expiresAt = new Date(Date.now() + 20 * 60 * 1000);
+
+    await db.execute(
+      `UPDATE users SET reset_code_hash = ?, reset_code_expires_at = ? WHERE id = ?`,
+      [codeHash, expiresAt, user.id],
+    );
+
+    // await send code here
+    await sendResetCodeEmail(
+      `${user.first_name} ${user.last_name}`,
+      emailAddress,
+      code,
+    );
+
+    return res.status(200).json({
+      message:
+        "If an account with that email exists, a reset code has been sent.",
+    });
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

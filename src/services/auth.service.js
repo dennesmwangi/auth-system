@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import crypto, { sign } from "crypto";
 import db from "../config/db.js";
 import jwt from "jsonwebtoken";
-import sendSignupEmail from "./email.service.js";
+import { sendSignupEmail } from "./email.service.js";
 
 const SALT_ROUNDS = 10;
 
