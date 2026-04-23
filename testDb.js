@@ -19,7 +19,15 @@ async function testConnection() {
     const connection = await pool.getConnection();
 
     // Simple query
-    const [rows] = await connection.query("SELECT 1 AS result");
+    //const [rows] = await connection.query("SELECT 1 AS result");
+    let id = 27;
+    const [rows] = await connection.query(
+      "SELECT email_address FROM users WHERE id = ?",
+      [id],
+    );
+
+    console.log(typeof rows);
+    console.log(rows);
 
     console.log("Connection successful");
     console.log("Test query result:", rows[0]);

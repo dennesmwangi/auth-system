@@ -52,3 +52,36 @@ export async function createUser({
 
   return { verificationToken };
 }
+
+export async function verifyEmailUser(token) {
+  const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
+
+  const [rows] = await db.execute(
+    "SELECT id, verification_token_expires_at FROM users WHERE verification_token_hash = ?",
+    [tokenHash],
+  );
+
+  /*if (rows.length === 0) {
+    return res.status(400).json({ message: "Invalid verification token" });
+  }*/
+
+  if (rows.length === 0) {
+    const error = new Error("Invalid verification token");
+    error.code = "INVALID_TOKEN";
+    throw error;
+  }
+
+  const user = rows[0];
+
+  if (new Date(user.verification_token_expires_at) < new Date()) {
+    const error = new Error("Token has expired");
+    error.code = "EXPIRED_TOKEN";
+    throw error;
+  }
+
+  await db.execute(
+    `UPDATE users SET email_address_verified = 1, verification_token_hash = NULL, verification_token_expires_at = NULL WHERE id = ?`,
+    [user.id],
+  );
+  return;
+}
