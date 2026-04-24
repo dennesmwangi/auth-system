@@ -31,7 +31,8 @@ export async function createUser({
     .update(verificationToken)
     .digest("hex");
 
-  const expiresAt = new Date(Date.now() + 20 * 60 * 1000);
+  const linkExpirytime = 5;
+  const expiresAt = new Date(Date.now() + linkExpirytime * 60 * 1000);
 
   await db.execute(
     `INSERT INTO users (
@@ -52,14 +53,14 @@ export async function createUser({
     ],
   );
 
-  return { verificationToken };
+  return { verificationToken, linkExpirytime };
 }
 
 export async function verifyEmailUser(token) {
   const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
 
   const [rows] = await db.execute(
-    "SELECT id, verification_token_expires_at FROM users WHERE verification_token_hash = ?",
+    "SELECT id, first_name, last_name, email_address, verification_token_expires_at FROM users WHERE verification_token_hash = ?",
     [tokenHash],
   );
 
@@ -85,7 +86,7 @@ export async function verifyEmailUser(token) {
     `UPDATE users SET email_address_verified = 1, verification_token_hash = NULL, verification_token_expires_at = NULL WHERE id = ?`,
     [user.id],
   );
-  return;
+  return user;
 }
 
 export async function logUserIn({ emailAddress, password }) {
@@ -117,7 +118,8 @@ export async function logUserIn({ emailAddress, password }) {
       .update(verificationToken)
       .digest("hex");
 
-    const expiresAt = new Date(Date.now() + 20 * 60 * 1000);
+    const linkExpirytime = 5;
+    const expiresAt = new Date(Date.now() + linkExpirytime * 60 * 1000);
 
     await db.execute(
       `UPDATE users 
