@@ -1,4 +1,4 @@
-export const resetCodeTemplate = (name, code) => {
+export const resetCodeTemplate = (name, code, codeExpirytime, email) => {
   return `
   <!doctype html>
   <html>
@@ -46,7 +46,7 @@ export const resetCodeTemplate = (name, code) => {
                     text-align: center;
                   "
                 >
-                  <p>Hello ${name},</p>
+                  <p>Hello <b>${name}</b>,</p>
                   <p>Use the code below to reset your password. If you didn't request a password reset, you can ignore this email.</p>
                   <h1 style="letter-spacing: 6px;">${code}</h1>
                 </td>
@@ -54,7 +54,7 @@ export const resetCodeTemplate = (name, code) => {
               <!-- Expiry -->
               <tr>
                 <td style="color: #64748b; font-size: 13px; text-align: center">
-                  This code will expire in <b>20 minutes</b>.
+                  This code will expire in <b>${codeExpirytime} minutes</b>.
                 </td>
               </tr>
 
@@ -68,7 +68,19 @@ export const resetCodeTemplate = (name, code) => {
                     text-align: center;
                   "
                 >
-                  This message was intended for ${name}. If you didn’t request this, you can safely ignore this email.
+                  This message was sent to <b>${email}</b> because you requested a password reset. If you didn’t request this, you can safely ignore this email. Also, please do not share this code with anyone else.
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding-top: 25px;
+                    font-size: 12px;
+                    color: #94a3b8;
+                    text-align: center;
+                  "
+                >
+                  &copy; ${new Date().getFullYear()} Auth System. All rights reserved.
                 </td>
               </tr>
             </table>

@@ -1,4 +1,4 @@
-const verifyEmailTemplate = (name, verificationLink) => {
+const verifyEmailTemplate = (name, verificationLink, email, linkExpirytime) => {
   return `
   <!doctype html>
   <html>
@@ -38,7 +38,7 @@ const verifyEmailTemplate = (name, verificationLink) => {
                     text-align: center;
                   "
                 >
-                  Hi <b style="color:#1c1c1e">${name}</b>, <br /><br />
+                  Hello <b style="color:#1c1c1e">${name}</b>, <br /><br />
                   Thanks for signing up! Please confirm your email address by
                   clicking the button below.
                 </td>
@@ -68,7 +68,7 @@ const verifyEmailTemplate = (name, verificationLink) => {
               <!-- Expiry -->
               <tr>
                 <td style="color: #6e6e73; font-size: 13px; text-align: center">
-                  This link will expire in <b style="color:#1c1c1e">20 minutes</b>.
+                  This link will expire in <b style="color:#1c1c1e">${linkExpirytime} minutes</b>.
                 </td>
               </tr>
 
@@ -101,8 +101,22 @@ const verifyEmailTemplate = (name, verificationLink) => {
                     text-align: center;
                   "
                 >
-                  This email was intended for <b>${name}</b>. If you didn’t create this account, you can safely ignore this
+                  This email was sent to <b>${email}</b> because you created an account with us. If you didn’t create this account, you can safely ignore this
                   email.
+                </td>
+                
+              </tr>
+
+              <tr>
+                <td
+                  style="
+                    padding-top: 24px;
+                    font-size: 12px;
+                    color: #6e6e73;
+                    text-align: center;
+                  "
+                >
+                  &copy; ${new Date().getFullYear()} Auth System. All rights reserved.
                 </td>
                 
               </tr>
