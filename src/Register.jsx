@@ -73,7 +73,7 @@ function Register() {
             <label>Email</label>
             <input
               type="email"
-              placeholder="you@example.com"
+              placeholder="Enter your email address"
               required
               value={emailAddress}
               onChange={(e) => setEmailAddress(e.target.value)}
@@ -84,7 +84,7 @@ function Register() {
             <label>Password</label>
             <input
               type="password"
-              placeholder="••••••••"
+              placeholder="Enter password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -95,7 +95,7 @@ function Register() {
             <label>Confirm Password</label>
             <input
               type="password"
-              placeholder="••••••••"
+              placeholder="Confirm password"
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}

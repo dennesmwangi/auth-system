@@ -21,7 +21,7 @@ function Login() {
           password,
         },
         {
-          withCredentials: true, // required for cookies
+          withCredentials: true,
         },
       );
 

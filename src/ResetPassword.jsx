@@ -4,30 +4,55 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 function ResetPassword() {
-  const [emailAddress, setEmailAddress] = useState("");
+  //const [emailAddress, setEmailAddress] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const savedEmail =
-      location.state?.emailAddress || localStorage.getItem("resetEmail");
+  const emailAddress =
+    location.state?.emailAddress || localStorage.getItem("resetEmail") || "";
 
+  useEffect(() => {
     const resetToken = localStorage.getItem("resetToken");
 
-    if (!savedEmail || !resetToken) {
-      toast.error("Reset session expired. Start again.");
+    if (!emailAddress || !resetToken) {
+      toast.error("Invalid request. Please start the reset process again.");
       navigate("/forgot");
       return;
     }
+  }, [emailAddress, navigate]);
 
-    setEmailAddress(savedEmail);
-  }, [location.state, navigate]);
+  const checkPasswordStrength = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasDigit = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const isStrong =
+      minLength <= password.length &&
+      hasUpperCase &&
+      hasLowerCase &&
+      hasDigit &&
+      hasSpecialChar;
+    return isStrong;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const normalizedNewPassword = newPassword.trim();
+    const normalizedConfirmPassword = confirmPassword.trim();
+
+    if (normalizedNewPassword !== normalizedConfirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    if (!checkPasswordStrength(normalizedNewPassword)) {
+      toast.error("Password does not meet strength requirements");
+      return;
+    }
 
     setIsLoading(true);
 
@@ -39,14 +64,14 @@ function ResetPassword() {
         {
           emailAddress,
           resetToken,
-          newPassword,
+          newPassword: normalizedNewPassword,
         },
       );
 
       localStorage.removeItem("resetEmail");
       localStorage.removeItem("resetToken");
 
-      toast.success(res.data.message || "Password reset successful");
+      toast.success(res.data?.message || "Password reset successfully");
       navigate("/");
     } catch (error) {
       localStorage.removeItem("resetEmail");
@@ -63,7 +88,16 @@ function ResetPassword() {
     <>
       <div className="card">
         <h2>Set New Password</h2>
-        <p>Enter your new password below</p>
+        <p>Password Must:</p>
+        <ul
+          style={{ marginLeft: "20px", marginBottom: "20px", fontSize: "14px" }}
+        >
+          <li className="form-list-item">Be at least 8 characters long</li>
+          <li className="form-list-item">Contain an uppercase letter</li>
+          <li className="form-list-item">Contain a lowercase letter</li>
+          <li className="form-list-item">Contain a digit</li>
+          <li className="form-list-item">Contain a special character</li>
+        </ul>
 
         <form onSubmit={handleSubmit}>
           <div className="field">
@@ -72,6 +106,8 @@ function ResetPassword() {
               type="password"
               placeholder="Enter new password"
               required
+              minLength={8}
+              autoComplete="new-password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
@@ -83,12 +119,18 @@ function ResetPassword() {
               type="password"
               placeholder="Confirm password"
               required
+              minLength={8}
+              autoComplete="new-password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
 
-          <button className="btn" type="submit" disabled={isLoading}>
+          <button
+            className="btn"
+            type="submit"
+            disabled={isLoading || !newPassword || !confirmPassword}
+          >
             {isLoading ? "Resetting ..." : "Reset Password"}
           </button>
         </form>

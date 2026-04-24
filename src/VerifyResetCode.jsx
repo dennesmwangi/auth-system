@@ -5,26 +5,31 @@ import { toast } from "react-toastify";
 
 function VerifyResetCode() {
   const [code, setCode] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  const emailAddress =
+    location.state?.emailAddress || localStorage.getItem("resetEmail") || "";
+
   useEffect(() => {
-    const savedEmail =
-      location.state?.emailAddress || localStorage.getItem("resetEmail");
-
-    if (!savedEmail) {
-      toast.error("Reset session expired. Start again.");
-      navigate("/forgot");
-      return;
+    if (!emailAddress) {
+      toast.error("Invalid request. Please start the reset process again.");
+      navigate("/forgot", { replace: true });
     }
+  }, [emailAddress, navigate]);
 
-    setEmailAddress(savedEmail);
-  }, [location.state, navigate]);
+  if (!emailAddress) return null;
+
+  const maskedEmail = emailAddress.replace(
+    /(^.).*(@.*$)/,
+    (_, a, b) => `${a}***${b}`,
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const normalizedCode = code.trim();
 
     setIsLoading(true);
 
@@ -33,47 +38,66 @@ function VerifyResetCode() {
         "http://192.168.5.100:5000/api/auth/verify-reset-code",
         {
           emailAddress,
-          code,
+          code: normalizedCode,
         },
       );
 
       localStorage.setItem("resetToken", res.data.resetToken);
 
-      toast.success(res.data.message);
+      toast.success(res.data.message || "Code verified.");
 
       navigate("/forgot/flow/reset", {
         state: { emailAddress },
       });
     } catch (error) {
+      if (error.response?.data?.error_code === "EXPIRED") {
+        toast.error(
+          error.response?.data?.message ||
+            "Code expired. Please request a new one.",
+        );
+
+        navigate("/forgot", {
+          state: { emailAddress },
+          replace: true,
+        });
+
+        return;
+      }
+
       toast.error(error.response?.data?.message || "Invalid code");
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
-    <>
-      <div className="card">
-        <h2>Reset Code</h2>
-        <p>Code sent to: {emailAddress}</p>
+    <div className="card">
+      <h2>Reset Code</h2>
+      <p>
+        Code was sent to: <b>{maskedEmail}</b>
+      </p>
 
-        <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label>Email</label>
-            <input
-              type="text"
-              placeholder="Enter reset code"
-              required
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-            />
-          </div>
+      <form onSubmit={handleSubmit}>
+        <div className="field">
+          <input
+            type="text"
+            placeholder="Enter reset code"
+            required
+            value={code}
+            disabled={isLoading}
+            onChange={(e) => setCode(e.target.value)}
+          />
+        </div>
 
-          <button className="btn" type="submit" disabled={isLoading}>
-            {isLoading ? "Sending..." : "Send"}
-          </button>
-        </form>
-      </div>
-    </>
+        <button
+          className="btn"
+          type="submit"
+          disabled={isLoading || !code.trim()}
+        >
+          {isLoading ? "Verifying..." : "Verify Code"}
+        </button>
+      </form>
+    </div>
   );
 }
 

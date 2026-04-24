@@ -62,6 +62,15 @@
   opacity: 0.9;
 }
 
+.btn:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  cursor: not-allowed;
+}
+
 .footer {
   text-align: center;
   font-size: 13px;
