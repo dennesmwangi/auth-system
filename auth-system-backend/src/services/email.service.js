@@ -2,6 +2,7 @@ import transporter from "./email.transporter.js";
 import verifyEmailTemplate from "./templates/verifyEmailTemplate.js";
 import { resetCodeTemplate } from "./templates/resetCodeTemplate.js";
 import { onboardingTemplate } from "./templates/onboardingTemplate.js";
+import { getPasswordChangedEmailTemplate } from "./templates/passwordChangedTemplate.js";
 
 export const sendSignupEmail = async (
   fullName,
@@ -50,6 +51,35 @@ export const sendOnboardingEmail = async (name, email) => {
       from: `"Onboarding Auth System" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: `Welcome onboard, ${name}`,
+      html,
+    });
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to send reset code");
+  }
+};
+
+export const sendPasswordChangedAlert = async ({
+  email,
+  name,
+  timestamp, //var
+  ipAddress, // var
+  deviceInfo, // var
+  location, // var
+}) => {
+  try {
+    const html = getPasswordChangedEmailTemplate({
+      name,
+      timestamp,
+      ipAddress,
+      deviceInfo,
+      location,
+      email,
+    });
+    await transporter.sendMail({
+      from: `"Security Auth System" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: `Security Alert!`,
       html,
     });
   } catch (error) {

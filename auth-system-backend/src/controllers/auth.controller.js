@@ -17,6 +17,8 @@ import bcrypt from "bcryptjs";
 import db from "../config/db.js";
 import { response } from "express";
 
+import { recordPasswordChange } from "../services/passwordAlert.service.js";
+
 const saltRounds = 10;
 
 export const registerUser = async (req, res) => {
@@ -225,6 +227,10 @@ export const verifyResetCode = async (req, res) => {
     }
 
     if (new Date(user.reset_code_expires_at) < new Date()) {
+      await db.execute(
+        `UPDATE users SET reset_code_hash = NULL, reset_code_expires_at = NULL WHERE id = ?`,
+        [user.id],
+      );
       return res.status(400).json({
         message: "Reset code has expired. Please request an new one.",
         error_code: "EXPIRED",
@@ -268,7 +274,7 @@ export const resetPassword = async (req, res) => {
 
   try {
     const [rows] = await db.execute(
-      `SELECT id, reset_token_hash, reset_token_expires_at FROM users WHERE email_address = ? LIMIT 1`,
+      `SELECT id, first_name, last_name, email_address, reset_token_hash, reset_token_expires_at FROM users WHERE email_address = ? LIMIT 1`,
       [emailAddress],
     );
 
@@ -301,6 +307,11 @@ export const resetPassword = async (req, res) => {
       `UPDATE users SET password_hash = ?, reset_token_hash = NULL, reset_token_expires_at = NULL WHERE id = ?`,
       [hashedPassword, user.id],
     );
+
+    const userId = user.id;
+    const changeMethod = "Manual";
+
+    await recordPasswordChange({ userId, req, changeMethod });
     return res.status(200).json({ message: "Password reset successful" });
   } catch (error) {
     console.error("Reset password error:", error);
