@@ -72,4 +72,42 @@ router.post("/update", auth, async (req, res) => {
   } catch (error) {}
 });
 
+router.post("/delete-account", auth, async (req, res) => {
+  const token = req.cookies.loginToken;
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const userID = decoded.id;
+
+  return res
+    .status(200)
+    .json({ message: "request reached server", userid: userID });
+  try {
+    const [currentUserRows] = await db.execute(
+      `SELECT first_name, last_name, email_address FROM users WHERE id=?`,
+      [userID],
+    );
+
+    if (currentUserRows.length === 0) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+
+    const currentUser = currentUserRows[0];
+
+    await db.execute(
+      `INSERT INTO deleted_users(first_name, last_name, email_address, deleted_at) VALUES (?, ?, ?, NOW())`,
+      [
+        currentUser.first_name,
+        currentUser.last_name,
+        currentUser.email_address,
+      ],
+    );
+
+    await db.execute(`DELETE FROM users WHERE id = ?`, [userID]);
+
+    return res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
 export default router;
