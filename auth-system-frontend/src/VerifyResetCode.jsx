@@ -46,7 +46,7 @@ function VerifyResetCode() {
 
       toast.success(res.data.message || "Code verified.");
 
-      navigate("/forgot/flow/reset", {
+      navigate("/reset-password", {
         state: { emailAddress },
       });
     } catch (error) {
@@ -64,12 +64,6 @@ function VerifyResetCode() {
         } else {
           toast.error(error.response?.data?.message || "Invalid request.");
         }
-
-        /*navigate("/forgot", {
-          state: { emailAddress },
-          replace: true,
-        });
-        */
 
         return;
       } else if (error.request) {

@@ -26,7 +26,7 @@ function Login() {
       );
 
       toast.success(res.data?.message);
-      navigate("/my/account");
+      navigate("/dashboard");
     } catch (error) {
       if (error.response) {
         toast.error(error.response?.data?.message);

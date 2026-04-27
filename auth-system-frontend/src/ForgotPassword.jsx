@@ -27,7 +27,7 @@ function ForgotPassword() {
       );
 
       localStorage.setItem("resetEmail", normalizedEmail);
-      navigate("/forgot/flow/verify", {
+      navigate("/verify-reset-code", {
         state: { emailAddress: normalizedEmail },
       });
 
