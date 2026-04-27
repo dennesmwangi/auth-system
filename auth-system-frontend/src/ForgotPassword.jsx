@@ -21,10 +21,9 @@ function ForgotPassword() {
     try {
       const normalizedEmail = emailAddress.trim().toLowerCase();
 
-      const res = await axios.post(
-        "http://192.168.5.100:5000/api/auth/forgot",
-        { emailAddress: normalizedEmail },
-      );
+      const res = await axios.post("/api/auth/forgot", {
+        emailAddress: normalizedEmail,
+      });
 
       localStorage.setItem("resetEmail", normalizedEmail);
       navigate("/verify-reset-code", {

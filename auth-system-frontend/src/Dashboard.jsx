@@ -10,7 +10,7 @@ function Dashboard() {
   const handleLogout = async () => {
     try {
       const res = await axios.post(
-        "http://192.168.5.100:5000/api/auth/logout",
+        "/api/auth/logout",
         {},
         { withCredentials: true },
       );
@@ -31,7 +31,7 @@ function Dashboard() {
     if (confirmed) {
       try {
         const res = await axios.post(
-          "http://192.168.5.100:5000/api/delete-account",
+          "/api/delete-account",
           {},
           { withCredentials: true },
         );
@@ -46,7 +46,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const res = await axios.get("http://192.168.5.100:5000/api/dashboard", {
+        const res = await axios.get("/api/dashboard", {
           withCredentials: true,
         });
         setUser(res.data.user);

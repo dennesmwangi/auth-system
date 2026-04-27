@@ -15,7 +15,7 @@ function Login() {
     setIsLoading(true);
     try {
       const res = await axios.post(
-        "http://192.168.5.100:5000/api/auth/login",
+        "/api/auth/login",
         {
           emailAddress,
           password,

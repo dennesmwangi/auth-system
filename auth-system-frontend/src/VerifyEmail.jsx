@@ -20,12 +20,9 @@ function VerifyEmail() {
 
     const verify = async () => {
       try {
-        const res = await axios.post(
-          "http://192.168.5.100:5000/api/auth/verify",
-          {
-            token,
-          },
-        );
+        const res = await axios.post("/api/auth/verify", {
+          token,
+        });
         toast.success(res.data?.message || "Email verification successful");
 
         navigate("/"); // success redirect

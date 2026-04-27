@@ -23,15 +23,12 @@ function Register() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post(
-        "http://192.168.5.100:5000/api/auth/register",
-        {
-          firstName,
-          lastName,
-          emailAddress,
-          password,
-        },
-      );
+      const res = await axios.post("/api/auth/register", {
+        firstName,
+        lastName,
+        emailAddress,
+        password,
+      });
       toast.success(res.data?.message || "Registration successful");
       navigate("/");
     } catch (error) {

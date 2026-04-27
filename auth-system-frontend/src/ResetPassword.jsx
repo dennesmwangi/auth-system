@@ -58,14 +58,11 @@ function ResetPassword() {
       setIsLoading(true);
       const resetToken = localStorage.getItem("resetToken");
 
-      const res = await axios.post(
-        "http://192.168.5.100:5000/api/auth/reset-password",
-        {
-          emailAddress,
-          resetToken,
-          newPassword: normalizedNewPassword,
-        },
-      );
+      const res = await axios.post("/api/auth/reset-password", {
+        emailAddress,
+        resetToken,
+        newPassword: normalizedNewPassword,
+      });
 
       localStorage.removeItem("resetEmail");
       localStorage.removeItem("resetToken");

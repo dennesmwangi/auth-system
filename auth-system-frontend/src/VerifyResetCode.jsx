@@ -34,13 +34,10 @@ function VerifyResetCode() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post(
-        "http://192.168.5.100:5000/api/auth/verify-reset-code",
-        {
-          emailAddress,
-          code: normalizedCode,
-        },
-      );
+      const res = await axios.post("/api/auth/verify-reset-code", {
+        emailAddress,
+        code: normalizedCode,
+      });
 
       localStorage.setItem("resetToken", res.data.resetToken);
 

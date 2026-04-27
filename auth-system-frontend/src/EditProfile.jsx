@@ -15,7 +15,7 @@ function EditProfile() {
   const handleLogout = async () => {
     try {
       const res = await axios.post(
-        "http://192.168.5.100:5000/api/auth/logout",
+        "/api/auth/logout",
         {},
         { withCredentials: true },
       );
@@ -40,7 +40,7 @@ function EditProfile() {
     }
     try {
       const res = await axios.post(
-        "http://192.168.5.100:5000/api/update",
+        "/api/update",
         {
           firstName,
           lastName,
@@ -74,7 +74,7 @@ function EditProfile() {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const res = await axios.get("http://192.168.5.100:5000/api/dashboard", {
+        const res = await axios.get("/api/dashboard", {
           withCredentials: true,
         });
         setUser(res.data.user);

@@ -43,7 +43,7 @@ function ChangePassword() {
       setIsLoading(true);
 
       const res = await axios.post(
-        "http://192.168.5.100:5000/api/auth/change-password",
+        "/api/auth/change-password",
         {
           currentPassword,
           newPassword: normalizedNewPassword,

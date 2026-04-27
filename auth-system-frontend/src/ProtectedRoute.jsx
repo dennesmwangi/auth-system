@@ -7,7 +7,7 @@ function ProtectedRoute() {
 
   useEffect(() => {
     axios
-      .get("http://192.168.5.100:5000/api/auth/me", {
+      .get("/api/auth/me", {
         withCredentials: true,
       })
       .then(() => setIsAuth(true))
