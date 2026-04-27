@@ -1,13 +1,22 @@
+import { useEffect, useState } from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import axios from "axios";
 
 function ProtectedRoute() {
-  const token = Cookies.get("loginToken");
+  const [isAuth, setIsAuth] = useState(null);
 
-  if (!token) {
-    return <Navigate to="/" replace />;
-  }
-  return <Outlet />;
+  useEffect(() => {
+    axios
+      .get("http://192.168.5.100:5000/api/auth/me", {
+        withCredentials: true,
+      })
+      .then(() => setIsAuth(true))
+      .catch(() => setIsAuth(false));
+  }, []);
+
+  if (isAuth === null) return <div>Loading...</div>;
+
+  return isAuth ? <Outlet /> : <Navigate to="/" />;
 }
 
 export default ProtectedRoute;
