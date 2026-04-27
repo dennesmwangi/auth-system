@@ -353,6 +353,10 @@ export const changePassword = async (req, res) => {
       userId,
     ]);
 
+    const changeMethod = "Manual";
+
+    recordPasswordChange({ userId, req, changeMethod });
+
     return res.status(200).json({ message: "Password changed succesfully" });
   } catch (error) {
     console.error("Reset password error:", error);
