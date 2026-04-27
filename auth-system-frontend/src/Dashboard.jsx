@@ -119,12 +119,6 @@ function Dashboard() {
               <Link className="link btn btn-outline" to="/change-password">
                 Change Password
               </Link>
-              <button
-                className="btn btn-outline"
-                onClick={handleChangePassword}
-              >
-                Change Password
-              </button>
             </div>
           </div>
 
