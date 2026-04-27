@@ -30,12 +30,6 @@ app.use(
 app.use(express.json({ limit: "1mb" }));
 
 app.get("/", (req, res) => {
-  console.log({
-    ip: req.socket.remoteAddress,
-    port: req.socket.remotePort,
-    browser: req.headers["user-agent"],
-    language: req.headers["accept-language"],
-  });
   res.status(200).json({
     name: "auth-system-backend",
     version: "1.0.0",
