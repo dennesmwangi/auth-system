@@ -3,6 +3,7 @@ import verifyEmailTemplate from "./templates/verifyEmailTemplate.js";
 import { resetCodeTemplate } from "./templates/resetCodeTemplate.js";
 import { onboardingTemplate } from "./templates/onboardingTemplate.js";
 import { getPasswordChangedEmailTemplate } from "./templates/passwordChangedTemplate.js";
+import { accountDeletedTemplate } from "./templates/accountDeleteTemplate.js";
 
 export const sendSignupEmail = async (
   fullName,
@@ -85,5 +86,20 @@ export const sendPasswordChangedAlert = async ({
   } catch (error) {
     console.error(error);
     throw new Error("Failed to send reset code");
+  }
+};
+
+export const sendDeleteAccountEmail = async (name, email) => {
+  try {
+    const html = accountDeletedTemplate(name, email);
+    await transporter.sendMail({
+      from: `"Support Team Auth System" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: `Account Deletion`,
+      html,
+    });
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to send account delete alert");
   }
 };
