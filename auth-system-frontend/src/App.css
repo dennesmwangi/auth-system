@@ -151,6 +151,12 @@
   border-radius: 14px;
 }
 
+.link {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+}
+
 .dashboard-container {
   max-width: 1100px;
   margin: 0 auto;
