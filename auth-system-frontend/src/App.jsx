@@ -5,6 +5,7 @@ import "./App.css";
 import Login from "./Login";
 import Register from "./Register";
 import Dashboard from "./Dashboard";
+import ChangePassword from "./ChangePassword";
 import ForgotPassword from "./ForgotPassword";
 import VerifyResetCode from "./VerifyResetCode";
 import ResetPassword from "./ResetPassword";
@@ -23,9 +24,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/forgot" element={<ForgotPassword />} />
-          <Route path="/forgot/flow/verify" element={<VerifyResetCode />} />
-          <Route path="/forgot/flow/reset" element={<ResetPassword />} />
-          <Route path="/my/account" element={<Dashboard />} />
+          <Route path="/verify-reset-code" element={<VerifyResetCode />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/change-password" element={<ChangePassword />}></Route>
           <Route path="/tos" element={<TermsOfService />} />
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
