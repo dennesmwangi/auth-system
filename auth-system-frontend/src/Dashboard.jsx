@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -116,6 +116,9 @@ function Dashboard() {
               <button className="btn btn-dark" onClick={handleEditProfile}>
                 Edit Profile
               </button>
+              <Link className="link btn btn-outline" to="/change-password">
+                Change Password
+              </Link>
               <button
                 className="btn btn-outline"
                 onClick={handleChangePassword}
