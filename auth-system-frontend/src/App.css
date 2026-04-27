@@ -265,6 +265,11 @@
     transform 0.2s ease;
 }
 
+.btn-small {
+  padding: 8px 12px;
+  width: 20%;
+}
+
 .btn:hover {
   transform: translateY(-1px);
 }
