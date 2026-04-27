@@ -359,3 +359,13 @@ export const changePassword = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const checkAuthToken = async (req, res) => {
+  const token = req.cookies.loginToken;
+
+  if (!token) {
+    return res.status(401).json({ authenticated: false });
+  }
+
+  return res.status(200).json({ authenticated: true });
+};

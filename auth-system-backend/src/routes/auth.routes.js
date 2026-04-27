@@ -9,6 +9,7 @@ import {
   verifyResetCode,
   resetPassword,
   changePassword,
+  checkAuthToken,
 } from "../controllers/auth.controller.js";
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.post("/forgot", forgotPassword);
 router.post("/verify-reset-code", verifyResetCode);
 router.post("/reset-password", resetPassword);
 router.post("/change-password", auth, changePassword);
+router.get("/me", checkAuthToken);
 
 export default router;
