@@ -343,7 +343,7 @@ export const changePassword = async (req, res) => {
     if (!comparePassword) {
       return res
         .status(404)
-        .json({ message: "Check your password and try again!" });
+        .json({ message: "Check your password and try again" });
     }
 
     const passwordHash = await bcrypt.hash(newPassword, saltRounds);
