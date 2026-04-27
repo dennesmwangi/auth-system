@@ -27,7 +27,6 @@ function App() {
           <Route path="/forgot" element={<ForgotPassword />} />
           <Route path="/verify-reset-code" element={<VerifyResetCode />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/tos" element={<TermsOfService />} />
           <Route path="*" element={<NotFound />}></Route>
 
