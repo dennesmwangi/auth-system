@@ -77,9 +77,6 @@ router.post("/delete-account", auth, async (req, res) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   const userID = decoded.id;
 
-  return res
-    .status(200)
-    .json({ message: "request reached server", userid: userID });
   try {
     const [currentUserRows] = await db.execute(
       `SELECT first_name, last_name, email_address FROM users WHERE id=?`,
@@ -103,7 +100,7 @@ router.post("/delete-account", auth, async (req, res) => {
 
     await db.execute(`DELETE FROM users WHERE id = ?`, [userID]);
 
-    return res.status(200).json({ message: "User deleted successfully" });
+    return res.status(200).json({ message: "Account deleted successfully" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Server error" });

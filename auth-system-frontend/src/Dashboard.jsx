@@ -7,14 +7,6 @@ function Dashboard() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  const handleEditProfile = () => {
-    console.log("Edit profile clicked");
-  };
-
-  const handleChangePassword = () => {
-    console.log("Change password clicked");
-  };
-
   const handleLogout = async () => {
     try {
       const res = await axios.post(
@@ -31,14 +23,23 @@ function Dashboard() {
     //console.log("Logout clicked");
   };
 
-  const handleDeleteAccount = () => {
+  const handleDeleteAccount = async () => {
     const confirmed = window.confirm(
       "Are you sure you want to delete your account?",
     );
 
     if (confirmed) {
-      toast.warning("Sorry to see you leave! Account deleted Successfully!");
-      console.log("Account deleted");
+      try {
+        const res = await axios.post(
+          "http://192.168.5.100:5000/api/delete-account",
+          {},
+          { withCredentials: true },
+        );
+        toast.success(res.data.message);
+        navigate("/");
+      } catch (error) {
+        toast.error(error.response?.data?.message);
+      }
     }
   };
 
