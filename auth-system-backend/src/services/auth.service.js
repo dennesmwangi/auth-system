@@ -97,7 +97,7 @@ export async function logUserIn({ emailAddress, password }) {
 
   if (rows.length === 0) {
     const error = new Error("Invalid email or password");
-    error.code = "INVALID_CREDENTIALS";
+    error.code = "USER_NOT_FOUND";
     throw error;
   }
 
@@ -106,8 +106,8 @@ export async function logUserIn({ emailAddress, password }) {
   const comparePassword = await bcrypt.compare(password, user.password_hash);
 
   if (!comparePassword) {
-    const error = new Error("Invalid email or password");
-    error.code = "INVALID_CREDENTIALS";
+    const error = new Error("Wrong password");
+    error.code = "WRONG_PASSWORD";
     throw error;
   }
 
