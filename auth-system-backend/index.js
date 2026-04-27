@@ -10,9 +10,9 @@ import userRoutes from "./src/routes/user.routes.js";
 import { json } from "stream/consumers";
 
 const app = express();
-const PORT = Number(process.env.PORT) || 5000;
-const HOST = "0.0.0.0";
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://192.168.5.100:3000";
+const HOST = process.env.HOST;
+const PORT = process.env.PORT;
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 
 app.disable("x-powered-by");
 app.use(cookieParser());
@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(
   cors({
     //origin: CLIENT_ORIGIN,
-    origin: ["http://192.168.5.100:3000"],
+    origin: process.env.CLIENT_ORIGIN,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
