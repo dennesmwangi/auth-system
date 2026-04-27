@@ -7,6 +7,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Dashboard from "./Dashboard";
 import ChangePassword from "./ChangePassword";
+import EditProfile from "./EditProfile";
 import ForgotPassword from "./ForgotPassword";
 import VerifyResetCode from "./VerifyResetCode";
 import ResetPassword from "./ResetPassword";
@@ -34,6 +35,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />}></Route>
             <Route path="/change-password" element={<ChangePassword />}></Route>
+            <Route path="/edit-profile" element={<EditProfile />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

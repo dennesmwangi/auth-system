@@ -3,17 +3,14 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-function Dashboard() {
+function EditProfile() {
   const [user, setUser] = useState(null);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
   const navigate = useNavigate();
-
-  const handleEditProfile = () => {
-    console.log("Edit profile clicked");
-  };
-
-  const handleChangePassword = () => {
-    console.log("Change password clicked");
-  };
 
   const handleLogout = async () => {
     try {
@@ -27,6 +24,32 @@ function Dashboard() {
       navigate("/");
     } catch (error) {
       toast.error("Logout failed");
+    }
+    //console.log("Logout clicked");
+  };
+
+  const handleEditProfile = async () => {
+    if (!firstName || !lastName) {
+      toast.error("Both first name and last name required");
+    }
+    try {
+      const res = await axios.post(
+        "http://192.168.5.100:5000/api/update",
+        {
+          firstName,
+          lastName,
+          phoneNumber: phoneNumber || "",
+        },
+        { withCredentials: true },
+      );
+      toast.success(res.data.message);
+
+      setFirstName("");
+      setLastName("");
+      setPhoneNumber("");
+      navigate("/edit-profile");
+    } catch (error) {
+      toast.error("Failed to update profile");
     }
     //console.log("Logout clicked");
   };
@@ -69,15 +92,21 @@ function Dashboard() {
       <div className="dashboard-container">
         <header className="dashboard-header">
           <div>
-            <h1>Dashboard</h1>
+            <h1>Edit Profile</h1>
+            {/*
             <p>
               Welcome, <br /> {`${user.first_name} ${user.last_name}`}
             </p>
+            */}
+            <span>
+              <b>*Note: Only name, phone can be edited!</b> <br />* Phone number
+              can be added if not added
+            </span>
           </div>
 
-          <button className="btn btn-dark" onClick={handleLogout}>
+          <Link className="btn btn-small link" onClick={handleLogout}>
             Logout
-          </button>
+          </Link>
         </header>
 
         <section className="dashboard-grid">
@@ -85,28 +114,46 @@ function Dashboard() {
             <h2>Profile</h2>
             <div className="profile-info">
               <div className="info-row">
-                <span>Full name</span>
-                <strong>{`${user.first_name} ${user.last_name}`}</strong>
+                <span>First name</span>
+                <input
+                  type="text"
+                  value={firstName}
+                  placeholder={user.first_name}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="edit-input"
+                />
               </div>
+
               <div className="info-row">
-                <span>Email</span>
-                <strong>{user.email_address}</strong>
-                <strong>
-                  {user.email_address_verified ? "Verified" : "Unverified"}
-                </strong>
+                <span>Last name</span>
+                <input
+                  type="text"
+                  value={lastName}
+                  placeholder={user.last_name}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="edit-input"
+                />
               </div>
 
               <div className="info-row">
                 <span>Phone</span>
-                <strong>
-                  {user.phone_number ? user.phone_number : "No Phone added"}
-                </strong>
-
-                <strong>
-                  {user.phone_number_verified ? "Verified" : "Unverified"}
-                </strong>
+                <input
+                  type="text"
+                  value={phoneNumber}
+                  maxLength={10}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  className="edit-input"
+                  placeholder="0712345678"
+                />
               </div>
 
+              <div className="info-row">
+                <span>Email</span>
+                <strong>{user.email_address}</strong>
+                <strong>
+                  {user.email_address_verified ? "Verified" : "Unverified"}{" "}
+                </strong>
+              </div>
               <div className="info-row">
                 <span>Role</span>
                 <strong>
@@ -125,23 +172,17 @@ function Dashboard() {
             </div>
 
             <div className="card-actions">
-              <Link className="link btn btn-dark" to="/edit-profile">
-                Edit Profile
+              <Link
+                className="link btn btn-dark"
+                onClick={handleEditProfile}
+                to="/edit-profile"
+              >
+                Update Profile
               </Link>
 
-              <Link className="link btn btn-outline" to="/change-password">
-                Change Password
+              <Link className="link btn btn-outline" to="/dashboard">
+                Back Home
               </Link>
-            </div>
-          </div>
-
-          <div className="card quick-card">
-            <h2>Quick Actions</h2>
-            <div className="quick-actions">
-              <button className="btn btn-dark">View Activity</button>
-              <button className="btn btn-dark">Notifications</button>
-              <button className="btn btn-dark">Security Settings</button>
-              <button className="btn btn-dark">Billing</button>
             </div>
           </div>
 
@@ -162,4 +203,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default EditProfile;
