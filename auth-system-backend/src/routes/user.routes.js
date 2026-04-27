@@ -55,10 +55,18 @@ router.post("/update", auth, async (req, res) => {
 
     const user = rows[0];
 
-    await db.execute(
-      `UPDATE users SET first_name = ?, last_name = ?, phone_number = ? WHERE id = ?`,
-      [firstName, lastName, phoneNumber, userId],
-    );
+    if (!phoneNumber) {
+      await db.execute(
+        `UPDATE users SET first_name = ?, last_name = ? WHERE id = ?`,
+        [firstName, lastName, userId],
+      );
+      return res.status(200).json({ message: "Profile updated successfully" });
+    } else {
+      await db.execute(
+        `UPDATE users SET first_name = ?, last_name = ?, phone_number = ? WHERE id = ?`,
+        [firstName, lastName, phoneNumber, userId],
+      );
+    }
 
     return res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {}

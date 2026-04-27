@@ -30,7 +30,13 @@ function EditProfile() {
 
   const handleEditProfile = async () => {
     if (!firstName || !lastName) {
-      toast.error("Both first name and last name required");
+      return toast.error("Both first name and last name required");
+    }
+
+    const checkPhone = /^(?:\+254|254|0)(7\d{8}|1\d{8})$/;
+
+    if (phoneNumber && !checkPhone.test(phoneNumber)) {
+      return toast.error("Invalid Phone number");
     }
     try {
       const res = await axios.post(
@@ -138,7 +144,7 @@ function EditProfile() {
               <div className="info-row">
                 <span>Phone</span>
                 <input
-                  type="text"
+                  type="tel"
                   value={phoneNumber}
                   maxLength={10}
                   onChange={(e) => setPhoneNumber(e.target.value)}
