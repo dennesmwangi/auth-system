@@ -26,6 +26,15 @@
   outline: none;
 }
 
+.edit-input {
+  width: 70%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
 .field input:focus {
   border-color: #111;
 }
@@ -203,6 +212,7 @@
 }
 
 .profile-card {
+  padding: 15px 15px;
   grid-column: span 1;
 }
 
@@ -224,6 +234,7 @@
 .info-row {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 16px;
   padding-bottom: 10px;
   border-bottom: 1px solid #f0f0f0;
