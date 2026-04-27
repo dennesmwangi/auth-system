@@ -119,8 +119,10 @@ export const loginUser = async (req, res) => {
   } catch (error) {
     console.error("loginUser error:", error);
 
-    if (error.code === "INVALID_CREDENTIALS") {
-      return res.status(404).json({ message: "Invalid email or password!" });
+    if (error.code === "USER_NOT_FOUND") {
+      return res.status(404).json({ message: "Email not found" });
+    } else if (error.code === "WRONG_PASSWORD") {
+      return res.status(404).json({ message: "Wrong password" });
     } else if (error.code === "UNVERIFIED_EMAIL") {
       return res.status(404).json({
         message:
@@ -150,6 +152,9 @@ export const logoutUser = async (req, res) => {
 
 export const forgotPassword = async (req, res) => {
   let { emailAddress } = req.body;
+  console.log(req.method);
+  console.log(req.body);
+  console.log(req.socket.remoteAddress);
 
   try {
     emailAddress = emailAddress?.trim().toLowerCase();
@@ -313,6 +318,42 @@ export const resetPassword = async (req, res) => {
 
     await recordPasswordChange({ userId, req, changeMethod });
     return res.status(200).json({ message: "Password reset successful" });
+  } catch (error) {
+    console.error("Reset password error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const changePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  try {
+    const userId = req.user.id;
+    const [rows] = await db.execute(
+      "SELECT password_hash FROM users WHERE id = ?",
+      [userId],
+    );
+
+    const user = rows[0];
+
+    const comparePassword = await bcrypt.compare(
+      currentPassword,
+      user.password_hash,
+    );
+
+    if (!comparePassword) {
+      return res
+        .status(404)
+        .json({ message: "Check your password and try again!" });
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, saltRounds);
+
+    await db.execute(`UPDATE users SET password_hash = ? WHERE id = ?`, [
+      passwordHash,
+      userId,
+    ]);
+
+    return res.status(200).json({ message: "Password changed succesfully" });
   } catch (error) {
     console.error("Reset password error:", error);
     return res.status(500).json({ message: "Internal server error" });

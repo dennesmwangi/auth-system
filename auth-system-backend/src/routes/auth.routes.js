@@ -8,6 +8,7 @@ import {
   forgotPassword,
   verifyResetCode,
   resetPassword,
+  changePassword,
 } from "../controllers/auth.controller.js";
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.post("/logout", logoutUser);
 router.post("/forgot", forgotPassword);
 router.post("/verify-reset-code", verifyResetCode);
 router.post("/reset-password", resetPassword);
+router.post("/change-password", changePassword);
 
 export default router;
