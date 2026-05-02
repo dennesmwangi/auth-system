@@ -63,20 +63,20 @@ npm start
 
 Create a .env file inside auth-system-backend:
 
-PORT=5000
-HOST=127.0.0.1
-CLIENT_ORIGIN=http://localhost:3000
+- PORT=5000
+- HOST=127.0.0.1
+- CLIENT_ORIGIN=http://localhost:3000
 
-EMAIL_USER=your_email@example.com
-EMAIL_PASS=your_email_password
+- EMAIL_USER=your_email@example.com
+- EMAIL_PASS=your_email_password
 
-DB_HOST=db_host
-DB_USER=db_user
-DB_PASSWORD=your_password
-DB_NAME=auth_system
-DB_PORT=3306
+- DB_HOST=db_host
+- DB_USER=db_user
+- DB_PASSWORD=your_password
+- DB_NAME=auth_system
+- DB_PORT=3306
 
-JWT_SECRET=your_secret_key
+- JWT_SECRET=your_secret_key
 
 ## API Documentation
 
