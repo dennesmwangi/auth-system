@@ -146,24 +146,77 @@
 
 /**
  * @swagger
- * /verify-reset-code:
+ * /api/auth/verify-reset-code:
  *   post:
- *     summary: Verify reset code
+ *     summary: Verify password reset code
  *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - emailAddress
+ *               - code
+ *             properties:
+ *               emailAddress:
+ *                 type: string
+ *                 example: john@example.com
+ *               code:
+ *                 type: string
+ *                 example: "123456"
  *     responses:
  *       200:
- *         description: Code verified
+ *         description: Reset code verified successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 resetToken:
+ *                   type: string
+ *       400:
+ *         description: Invalid or expired reset code
+ *       500:
+ *         description: Internal server error
  */
 
 /**
  * @swagger
- * /reset-password:
+ * /api/auth/reset-password:
  *   post:
- *     summary: Reset password
+ *     summary: Reset user password using reset token
  *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - emailAddress
+ *               - resetToken
+ *               - newPassword
+ *             properties:
+ *               emailAddress:
+ *                 type: string
+ *                 example: john@example.com
+ *               resetToken:
+ *                 type: string
+ *                 example: "bf9e659e7e0cce1f26b20bdd392b6d7ce77574efb32bd5a02bb00afe76530335"
+ *               newPassword:
+ *                 type: string
+ *                 example: "NewStrongPass123!"
  *     responses:
  *       200:
  *         description: Password reset successful
+ *       400:
+ *         description: Invalid or expired reset token
+ *       500:
+ *         description: Internal server error
  */
 
 /**
