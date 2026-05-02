@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
+import swaggerUi from "swagger-ui-express";
+import swaggerJSDoc from "swagger-jsdoc";
 import cors from "cors";
 import os from "os";
 import cookieParser from "cookie-parser";
@@ -10,6 +12,26 @@ import userRoutes from "./src/routes/user.routes.js";
 import { json } from "stream/consumers";
 
 const app = express();
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Auth System API",
+      version: "1.0.0",
+      description: "Auth System API documentation",
+    },
+    servers: [
+      {
+        url: "http://127.0.0.1:5000",
+      },
+    ],
+  },
+  apis: ["./routes/*.js"],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 const HOST = process.env.HOST;
 const PORT = process.env.PORT;
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
@@ -35,7 +57,6 @@ app.get("/", (req, res) => {
     description: "Auth System Project(backend)",
     status: "running",
     uptime: process.uptime(),
-    server_health: "/health",
   });
 });
 
@@ -58,9 +79,7 @@ const server = app.listen(PORT, HOST, () => {
   const hostIP = process.env.HOST_IP;
 
   console.log("Server running:");
-  console.log(`- Local:   http://localhost:${PORT}`);
-  console.log(`- Network: http://${hostIP}:${PORT}`);
-  console.log(`- Client:  ${CLIENT_ORIGIN}`);
+  console.log(`- IP:   http://${HOST}:${PORT}`);
 });
 
 server.on("error", (error) => {
