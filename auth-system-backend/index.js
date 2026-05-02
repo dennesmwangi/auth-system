@@ -19,7 +19,6 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    //origin: CLIENT_ORIGIN,
     origin: process.env.CLIENT_ORIGIN,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -37,13 +36,6 @@ app.get("/", (req, res) => {
     status: "running",
     uptime: process.uptime(),
     server_health: "/health",
-  });
-});
-
-app.get("/health", (req, res) => {
-  res.status(200).json({
-    status: "running",
-    uptime: process.uptime(),
   });
 });
 
