@@ -104,21 +104,21 @@ http://127.0.0.1:5000/api-docs
 #### Email Verification
 
 ![Verification Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/verificationemail.PNG)
-![Email Verification Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/emailverificationsuccess.png)
-![Welcome Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/welcomeemail.png)
+![Email Verification Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/emailverificationsuccess.PNG)
+![Welcome Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/welcomeemail.PNG)
 
 #### Login
 
-![Login Screen](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/loginscreen.png)
-![Login Error](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/loginerror.png)
-![Login Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/loginsuccess.png)
+![Login Screen](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/loginscreen.PNG)
+![Login Error](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/loginerror.PNG)
+![Login Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/loginsuccess.PNG)
 
 #### Dashboard & Account
 
-![Dashboard](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/dashboard.png)
-![Delete Account](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/deleteaccount.png)
-![Delete Account Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/deleteaccountsuccess.png)
-![Delete Account Email](./screenshots/accountdeletionemail.png)
+![Dashboard](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/dashboard.PNG)
+![Delete Account](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/deleteaccount.PNG)
+![Delete Account Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/deleteaccountsuccess.PNG)
+![Delete Account Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/accountdeletionemail.PNG)
 
 ## Notes
 
