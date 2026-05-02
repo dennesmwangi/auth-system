@@ -97,14 +97,13 @@ http://127.0.0.1:5000/api-docs
 #### Registration
 
 ![Password Error](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/passworderror.PNG)
-//https://github.com/dennesmwangi/auth-system/blob/main/screenshots/passwordsdonotmatch.PNG
 ![Password Mismatch](./screenshots/passwordsdonotmatch.png)
-![Existing Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/emailexists.png)
-![Registration Successful](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/registrationsuccessful.png)
+![Existing Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/emailexists.PNG)
+![Registration Successful](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/registrationsuccessful.PNG)
 
 #### Email Verification
 
-![Verification Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/verificationemail.png)
+![Verification Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/verificationemail.PNG)
 ![Email Verification Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/emailverificationsuccess.png)
 ![Welcome Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/welcomeemail.png)
 
