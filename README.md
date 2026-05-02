@@ -21,7 +21,7 @@ This repository contains the source code for an authentication system that suppo
 
 ## Notes
 
-Environment Variables
+## Environment Variables
 
 Create a .env file for auth-system-backend folder:
 
@@ -39,3 +39,7 @@ DB_NAME=auth_system
 DB_PORT=3306
 
 JWT_SECRET=your_secret_key
+
+## Screenshots
+
+![Dashboard](screenshots/dashboard.png)
