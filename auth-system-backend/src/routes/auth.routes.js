@@ -256,15 +256,15 @@
 
 /**
  * @swagger
- * /me:
+ * /api/auth/me:
  *   get:
- *     summary: Get current user
+ *     summary: Check authentication status
  *     tags: [Auth]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: User info
+ *         description: Authenticated status
+ *       401:
+ *         description: Not authenticated
  */
 
 import express from "express";
