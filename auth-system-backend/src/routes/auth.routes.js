@@ -32,7 +32,7 @@
  *               emailAddress:
  *                 type: string
  *                 format: email
- *                 example: john@example.com
+ *                 example: dennesmwangi@gmail.com
  *               password:
  *                 type: string
  *                 format: password
@@ -46,18 +46,36 @@
 
 /**
  * @swagger
- * /verify:
+ * /api/auth/verify:
  *   post:
- *     summary: Verify email
+ *     summary: Verify email using token
  *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - token
+ *             properties:
+ *               token:
+ *                 type: string
+ *                 example: "bf9e659e7e0cce1f26b20bdd392b6d7ce77574efb32bd5a02bb00afe76530335"
  *     responses:
- *       200:
- *         description: Email verified
+ *       201:
+ *         description: Email verified successfully. User can now log in.
+ *       400:
+ *         description: Missing or invalid token
+ *       404:
+ *         description: Token expired
+ *       500:
+ *         description: Internal server error
  */
 
 /**
  * @swagger
- * /login:
+ * /api/auth/login:
  *   post:
  *     summary: Login user
  *     tags: [Auth]

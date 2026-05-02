@@ -23,7 +23,6 @@ const saltRounds = 10;
 
 export const registerUser = async (req, res) => {
   try {
-    console.log(req.body);
     const { data, error } = validateRegisterInput(req.body);
 
     if (error) {
@@ -68,11 +67,8 @@ export const verifyEmail = async (req, res) => {
 
     const user = await verifyEmailUser(token);
 
-    console.log(user);
-
     // send onboarding email here
     const { first_name, last_name, email_address } = user;
-    console.log(first_name, last_name, email_address);
 
     const fullName = `${first_name} ${last_name}`;
     sendOnboardingEmail(fullName, email_address);
@@ -152,9 +148,6 @@ export const logoutUser = async (req, res) => {
 
 export const forgotPassword = async (req, res) => {
   let { emailAddress } = req.body;
-  console.log(req.method);
-  console.log(req.body);
-  console.log(req.socket.remoteAddress);
 
   try {
     emailAddress = emailAddress?.trim().toLowerCase();
@@ -201,7 +194,6 @@ export const forgotPassword = async (req, res) => {
         "If an account with that email exists, a reset code has been sent.",
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
