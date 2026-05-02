@@ -97,7 +97,8 @@ http://127.0.0.1:5000/api-docs
 #### Registration
 
 ![Password Error](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/passworderror.PNG)
-![Password Mismatch](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/passwordsdonotmatch.png)
+//https://github.com/dennesmwangi/auth-system/blob/main/screenshots/passwordsdonotmatch.PNG
+![Password Mismatch](./screenshots/passwordsdonotmatch.png)
 ![Existing Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/emailexists.png)
 ![Registration Successful](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/registrationsuccessful.png)
 
