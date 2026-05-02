@@ -221,15 +221,37 @@
 
 /**
  * @swagger
- * /change-password:
+ * /api/auth/change-password:
  *   post:
- *     summary: Change password (authenticated)
+ *     summary: Change password for authenticated user
  *     tags: [Auth]
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - currentPassword
+ *               - newPassword
+ *             properties:
+ *               currentPassword:
+ *                 type: string
+ *                 example: OldPass123!
+ *               newPassword:
+ *                 type: string
+ *                 example: NewStrongPass123!
  *     responses:
  *       200:
- *         description: Password changed
+ *         description: Password changed successfully
+ *       400:
+ *         description: Invalid input
+ *       404:
+ *         description: Current password incorrect
+ *       500:
+ *         description: Internal server error
  */
 
 /**
