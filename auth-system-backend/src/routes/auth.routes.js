@@ -119,13 +119,29 @@
 
 /**
  * @swagger
- * /forgot:
+ * /api/auth/forgot:
  *   post:
- *     summary: Request password reset
+ *     summary: Request password reset code
  *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - emailAddress
+ *             properties:
+ *               emailAddress:
+ *                 type: string
+ *                 example: john@example.com
  *     responses:
  *       200:
- *         description: Reset code sent
+ *         description: If account exists, reset code is sent
+ *       400:
+ *         description: Email is required
+ *       500:
+ *         description: Internal server error
  */
 
 /**
