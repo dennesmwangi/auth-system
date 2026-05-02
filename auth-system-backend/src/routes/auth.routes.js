@@ -106,13 +106,15 @@
 
 /**
  * @swagger
- * /logout:
+ * /api/auth/logout:
  *   post:
- *     summary: Logout user
+ *     summary: Logout user (clears auth cookie)
  *     tags: [Auth]
  *     responses:
  *       200:
- *         description: Logged out
+ *         description: Logged out successfully
+ *       500:
+ *         description: Internal server error
  */
 
 /**
