@@ -118,7 +118,7 @@ http://127.0.0.1:5000/api-docs
 ![Dashboard](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/dashboard.png)
 ![Delete Account](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/deleteaccount.png)
 ![Delete Account Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/deleteaccountsuccess.png)
-![Delete Account Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/accountdeletionemail.png)
+![Delete Account Email](./screenshots/accountdeletionemail.png)
 
 ## Notes
 
