@@ -97,28 +97,28 @@ http://127.0.0.1:5000/api-docs
 #### Registration
 
 ![Password Error](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/passworderror.PNG)
-![Password Mismatch](screenshots/passwordsdonotmatch.png)
-![Existing Email](screenshots/emailexists.png)
-![Registration Successful](screenshots/registrationsuccessful.png)
+![Password Mismatch](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/passwordsdonotmatch.png)
+![Existing Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/emailexists.png)
+![Registration Successful](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/registrationsuccessful.png)
 
 #### Email Verification
 
-![Verification Email](screenshots/verificationemail.png)
-![Email Verification Success](screenshots/emailverificationsuccess.png)
-![Welcome Email](screenshots/welcomeemail.png)
+![Verification Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/verificationemail.png)
+![Email Verification Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/emailverificationsuccess.png)
+![Welcome Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/welcomeemail.png)
 
 #### Login
 
-![Login Screen](screenshots/loginscreen.png)
-![Login Error](screenshots/loginerror.png)
-![Login Success](screenshots/loginsuccess.png)
+![Login Screen](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/loginscreen.png)
+![Login Error](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/loginerror.png)
+![Login Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/loginsuccess.png)
 
 #### Dashboard & Account
 
-![Dashboard](screenshots/dashboard.png)
-![Delete Account](screenshots/deleteaccount.png)
-![Delete Account Success](screenshots/deleteaccountsuccess.png)
-![Delete Account Email](screenshots/accountdeletionemail.png)
+![Dashboard](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/dashboard.png)
+![Delete Account](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/deleteaccount.png)
+![Delete Account Success](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/deleteaccountsuccess.png)
+![Delete Account Email](https://github.com/dennesmwangi/auth-system/blob/main/screenshots/accountdeletionemail.png)
 
 ## Notes
 
