@@ -32,7 +32,7 @@
  *               emailAddress:
  *                 type: string
  *                 format: email
- *                 example: dennesmwangi@gmail.com
+ *                 example: john@example.com
  *               password:
  *                 type: string
  *                 format: password
@@ -79,9 +79,29 @@
  *   post:
  *     summary: Login user
  *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - emailAddress
+ *               - password
+ *             properties:
+ *               emailAddress:
+ *                 type: string
+ *                 example: john@example.com
+ *               password:
+ *                 type: string
+ *                 example: StrongPass123!
  *     responses:
  *       200:
- *         description: Login successful
+ *         description: Login successful (cookie set)
+ *       404:
+ *         description: Invalid credentials or unverified email
+ *       500:
+ *         description: Internal server error
  */
 
 /**
